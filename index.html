@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insurance Basics — Medical Assistant Training</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#0a0e1a;
+--surface:rgba(255,255,255,.06);
+--surface2:rgba(255,255,255,.09);
+--surface3:rgba(255,255,255,.13);
+--text:#f0f0f5;--text2:#a8b2c8;--text3:#6b7894;
+--white:#fff;
+--radius:16px;--radius-sm:10px;--radius-lg:22px;
+--transition:all .35s cubic-bezier(.4,0,.2,1);
+/* Vibrant palette */
+--coral:#ff6b6b;--coral-g:linear-gradient(135deg,#ff6b6b,#ee5a24);
+--sky:#38bdf8;--sky-g:linear-gradient(135deg,#38bdf8,#0ea5e9);
+--violet:#a78bfa;--violet-g:linear-gradient(135deg,#a78bfa,#7c3aed);
+--emerald:#34d399;--emerald-g:linear-gradient(135deg,#34d399,#059669);
+--amber:#fbbf24;--amber-g:linear-gradient(135deg,#fbbf24,#f59e0b);
+--pink:#f472b6;--pink-g:linear-gradient(135deg,#f472b6,#ec4899);
+--teal:#2dd4bf;--teal-g:linear-gradient(135deg,#2dd4bf,#14b8a6);
+--orange:#fb923c;--orange-g:linear-gradient(135deg,#fb923c,#f97316);
+--indigo:#818cf8;--indigo-g:linear-gradient(135deg,#818cf8,#6366f1);
+--lime:#a3e635;--lime-g:linear-gradient(135deg,#a3e635,#84cc16);
+--rose:#fb7185;--rose-g:linear-gradient(135deg,#fb7185,#e11d48);
+--cyan:#22d3ee;--cyan-g:linear-gradient(135deg,#22d3ee,#06b6d4);
+--success:#34d399;--success-bg:rgba(52,211,153,.15);
+--error:#fb7185;--error-bg:rgba(251,113,133,.15);
+--warn:#fbbf24;--warn-bg:rgba(251,191,36,.15);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
+  radial-gradient(ellipse 80% 60% at 10% 20%, rgba(167,139,250,.12) 0%, transparent 60%),
+  radial-gradient(ellipse 60% 50% at 90% 80%, rgba(56,189,248,.1) 0%, transparent 50%),
+  radial-gradient(ellipse 50% 40% at 50% 50%, rgba(244,114,182,.08) 0%, transparent 50%);
+pointer-events:none;z-index:0}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:700;line-height:1.2}
+h1{font-size:clamp(2rem,5vw,3.2rem)}
+h2{font-size:clamp(1.5rem,3.5vw,2.2rem);margin-bottom:.5em}
+h3{font-size:clamp(1.1rem,2.5vw,1.5rem)}
+button{font-family:'DM Sans',sans-serif;cursor:pointer;border:none;outline:none}
+button:focus-visible{outline:2px solid var(--sky);outline-offset:3px}
+
+.app-wrapper{max-width:920px;margin:0 auto;padding:1rem;position:relative;z-index:1}
+
+/* ===== TOP BAR ===== */
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.2rem;background:rgba(255,255,255,.05);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);margin-bottom:1.5rem;gap:.75rem;flex-wrap:wrap;position:sticky;top:.5rem;z-index:100}
+.top-bar .logo{font-family:'Playfair Display',serif;font-size:1.15rem;background:linear-gradient(135deg,var(--sky),var(--violet),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+.top-bar .controls{display:flex;gap:.5rem;align-items:center}
+.icon-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);color:var(--text2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:var(--transition);border:1px solid rgba(255,255,255,.06)}
+.icon-btn:hover{background:rgba(255,255,255,.15);color:var(--white);transform:scale(1.05)}
+
+/* Progress */
+.progress-wrap{flex:1;min-width:120px;max-width:320px}
+.progress-bar-outer{height:10px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
+.progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--coral),var(--amber),var(--emerald),var(--sky),var(--violet));border-radius:99px;transition:width .6s ease;width:0%;background-size:300% 100%;animation:shimmer 3s linear infinite}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:0 0}}
+.progress-label{font-size:.72rem;color:var(--text3);text-align:center;margin-top:3px}
+
+/* Section dots */
+.section-dots{display:flex;justify-content:center;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.1);transition:var(--transition);cursor:pointer;border:2px solid transparent}
+.dot:hover{background:rgba(255,255,255,.2)}
+.dot.active{background:var(--sky);box-shadow:0 0 12px rgba(56,189,248,.5);border-color:var(--sky)}
+.dot.completed{background:var(--emerald);border-color:var(--emerald);box-shadow:0 0 8px rgba(52,211,153,.4)}
+
+/* Sections */
+.section{display:none;animation:sectionIn .6s cubic-bezier(.4,0,.2,1) forwards}
+.section.active{display:block}
+@keyframes sectionIn{from{opacity:0;transform:translateY(30px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.section-header{text-align:center;margin-bottom:2.5rem}
+.section-header .sec-badge{display:inline-block;font-size:.72rem;font-weight:700;padding:.3rem 1rem;border-radius:99px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem;color:var(--white)}
+.section-header p{color:var(--text2);max-width:580px;margin:.5rem auto 0}
+
+/* ===== GLASS CARD ===== */
+.card{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.25rem;transition:var(--transition);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)}
+.card:hover{border-color:rgba(255,255,255,.15);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;border-radius:var(--radius-sm);font-weight:600;font-size:.9rem;transition:var(--transition);position:relative;overflow:hidden}
+.btn-primary{background:linear-gradient(135deg,var(--sky),var(--violet));color:var(--white)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(56,189,248,.35)}
+.btn-secondary{background:rgba(255,255,255,.08);color:var(--text);border:1px solid rgba(255,255,255,.1)}
+.btn-secondary:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.2)}
+.btn-success{background:var(--emerald-g);color:var(--white)}
+.btn-success:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(52,211,153,.35)}
+.btn-sm{padding:.5rem 1rem;font-size:.82rem}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+
+/* ===== QUIZ OPTIONS ===== */
+.option-btn{display:flex;align-items:center;gap:.75rem;width:100%;text-align:left;padding:1rem 1.25rem;background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);color:var(--text);font-size:.92rem;margin-bottom:.65rem;transition:var(--transition);cursor:pointer}
+.option-btn:hover:not(.chosen){background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);transform:translateX(4px)}
+.option-btn .marker{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);font-weight:700;font-size:.82rem;flex-shrink:0;transition:var(--transition)}
+.option-btn.chosen.correct-answer{border-color:var(--emerald);background:var(--success-bg)}
+.option-btn.chosen.correct-answer .marker{background:var(--emerald);color:var(--bg)}
+.option-btn.chosen.wrong-answer{border-color:var(--rose);background:var(--error-bg)}
+.option-btn.chosen.wrong-answer .marker{background:var(--rose);color:var(--white)}
+.option-btn.reveal-correct{border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.06)}
+.option-btn.reveal-correct .marker{background:rgba(52,211,153,.3)}
+
+/* Rationale */
+.rationale{margin-top:.75rem;padding:1rem 1.2rem;border-radius:var(--radius-sm);font-size:.88rem;line-height:1.6;display:none;animation:sectionIn .35s ease forwards}
+.rationale.show{display:block}
+.rationale.correct-r{background:var(--success-bg);border-left:4px solid var(--emerald)}
+.rationale.incorrect-r{background:var(--error-bg);border-left:4px solid var(--rose)}
+
+/* ===== CONCEPT CARDS - DIMENSIONAL & COLORFUL ===== */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;margin:1.5rem 0}
+.concept-card{position:relative;border-radius:var(--radius);padding:1.5rem;cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);overflow:hidden;border:1px solid rgba(255,255,255,.1);min-height:120px}
+.concept-card::before{content:'';position:absolute;inset:0;opacity:.12;transition:opacity .4s;z-index:0}
+.concept-card::after{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%);z-index:0;transition:var(--transition)}
+.concept-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.concept-card:hover::after{top:-30%;right:-30%}
+.concept-card>*{position:relative;z-index:1}
+.concept-card .card-icon{font-size:1.8rem;margin-bottom:.5rem}
+.concept-card .term{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:.25rem}
+.concept-card .peek{font-size:.82rem;opacity:.7;margin-bottom:.5rem}
+.concept-card .detail{display:none;font-size:.86rem;line-height:1.6;margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.15)}
+.concept-card.flipped .detail{display:block;animation:sectionIn .35s ease forwards}
+.concept-card .flip-hint{position:absolute;bottom:.6rem;right:.8rem;font-size:.68rem;opacity:.45;z-index:1}
+.concept-card.flipped .flip-hint{display:none}
+.concept-card .why-box{margin-top:.6rem;padding:.6rem .8rem;background:rgba(0,0,0,.2);border-radius:8px;font-size:.82rem}
+.concept-card .why-label{font-weight:700;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;opacity:.8}
+
+/* Card color themes */
+.cc-coral{background:linear-gradient(135deg,rgba(255,107,107,.15),rgba(238,90,36,.08))}
+.cc-coral::before{background:var(--coral-g)}
+.cc-coral .term{color:var(--coral)}
+.cc-sky{background:linear-gradient(135deg,rgba(56,189,248,.15),rgba(14,165,233,.08))}
+.cc-sky::before{background:var(--sky-g)}
+.cc-sky .term{color:var(--sky)}
+.cc-violet{background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(124,58,237,.08))}
+.cc-violet::before{background:var(--violet-g)}
+.cc-violet .term{color:var(--violet)}
+.cc-emerald{background:linear-gradient(135deg,rgba(52,211,153,.15),rgba(5,150,105,.08))}
+.cc-emerald::before{background:var(--emerald-g)}
+.cc-emerald .term{color:var(--emerald)}
+.cc-amber{background:linear-gradient(135deg,rgba(251,191,36,.15),rgba(245,158,11,.08))}
+.cc-amber::before{background:var(--amber-g)}
+.cc-amber .term{color:var(--amber)}
+.cc-pink{background:linear-gradient(135deg,rgba(244,114,182,.15),rgba(236,72,153,.08))}
+.cc-pink::before{background:var(--pink-g)}
+.cc-pink .term{color:var(--pink)}
+.cc-teal{background:linear-gradient(135deg,rgba(45,212,191,.15),rgba(20,184,166,.08))}
+.cc-teal::before{background:var(--teal-g)}
+.cc-teal .term{color:var(--teal)}
+.cc-orange{background:linear-gradient(135deg,rgba(251,146,60,.15),rgba(249,115,22,.08))}
+.cc-orange::before{background:var(--orange-g)}
+.cc-orange .term{color:var(--orange)}
+.cc-indigo{background:linear-gradient(135deg,rgba(129,140,248,.15),rgba(99,102,241,.08))}
+.cc-indigo::before{background:var(--indigo-g)}
+.cc-indigo .term{color:var(--indigo)}
+.cc-lime{background:linear-gradient(135deg,rgba(163,230,53,.15),rgba(132,204,22,.08))}
+.cc-lime::before{background:var(--lime-g)}
+.cc-lime .term{color:var(--lime)}
+.cc-rose{background:linear-gradient(135deg,rgba(251,113,133,.15),rgba(225,29,72,.08))}
+.cc-rose::before{background:var(--rose-g)}
+.cc-rose .term{color:var(--rose)}
+.cc-cyan{background:linear-gradient(135deg,rgba(34,211,238,.15),rgba(6,182,212,.08))}
+.cc-cyan::before{background:var(--cyan-g)}
+.cc-cyan .term{color:var(--cyan)}
+
+/* ===== EOB ===== */
+.eob-container{background:linear-gradient(180deg,#f8faff,#ffffff);color:#1a1a2e;border-radius:var(--radius);padding:1.75rem;font-size:.88rem;position:relative;border:1px solid #e2e8f0;box-shadow:0 8px 30px rgba(0,0,0,.2)}
+.eob-container h4{color:#1a1a2e;font-family:'Playfair Display',serif;margin-bottom:.5rem}
+.eob-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.eob-table th{padding:.6rem .4rem;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:#5a6275;border-bottom:2px solid #c7d2fe;background:linear-gradient(180deg,#eef2ff,#e8edff)}
+.eob-table td{padding:.6rem .4rem;border-bottom:1px solid #e5e7eb;font-size:.8rem;cursor:pointer;transition:all .2s}
+.eob-table td:hover{background:#dbeafe!important}
+.eob-row.inspected{background:#f0f7ff!important}
+.eob-cell-highlight{cursor:pointer;position:relative}
+.eob-cell-highlight:hover{color:#3b82f6;font-weight:600}
+
+.eob-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:linear-gradient(135deg,#1e293b,#0f172a);color:var(--text);border-radius:var(--radius-lg);padding:2rem;max-width:440px;width:92%;z-index:200;box-shadow:0 25px 70px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.1);animation:sectionIn .3s ease forwards;display:none}
+.eob-popup h4{font-family:'Playfair Display',serif;margin-bottom:.75rem;font-size:1.15rem}
+.eob-popup .close-popup{position:absolute;top:.75rem;right:1rem;background:rgba(255,255,255,.1);color:var(--text2);font-size:1rem;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition)}
+.eob-popup .close-popup:hover{background:rgba(255,255,255,.2);color:var(--white)}
+.eob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:199;display:none}
+.eob-overlay.show{display:block}
+
+/* ===== MATCHING ===== */
+.match-area{display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center;margin:1.5rem 0}
+.match-col{flex:1;min-width:220px}
+.match-col h4{text-align:center;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;color:var(--text3)}
+.match-item{padding:.8rem 1rem;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);margin-bottom:.55rem;cursor:pointer;transition:var(--transition);font-size:.88rem;text-align:center}
+.match-item:hover{border-color:var(--sky);background:rgba(56,189,248,.08);transform:translateY(-2px)}
+.match-item.selected{border-color:var(--violet);background:rgba(167,139,250,.1);box-shadow:0 0 15px rgba(167,139,250,.2)}
+.match-item.matched{border-color:var(--emerald);background:var(--success-bg);cursor:default;opacity:.7}
+.match-item.wrong-flash{animation:wrongShake .4s ease;border-color:var(--rose)}
+@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+/* Sorting */
+.sort-bucket{min-height:65px;background:rgba(255,255,255,.03);border:2px dashed rgba(255,255,255,.12);border-radius:var(--radius-sm);padding:.75rem;transition:var(--transition)}
+.sort-bucket.drag-over{border-color:var(--sky);background:rgba(56,189,248,.05);box-shadow:inset 0 0 20px rgba(56,189,248,.1)}
+.sort-chip{display:inline-block;padding:.5rem 1rem;border-radius:99px;font-size:.82rem;margin:.3rem;cursor:grab;transition:var(--transition);user-select:none;border:1px solid rgba(255,255,255,.1)}
+.sort-chip:active{cursor:grabbing;transform:scale(1.05)}
+.sort-chip.selected{box-shadow:0 0 12px rgba(167,139,250,.3)}
+
+/* Score pill */
+.score-pill{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .9rem;border-radius:99px;font-size:.8rem;font-weight:600}
+.score-pill.strong{background:var(--success-bg);color:var(--emerald)}
+.score-pill.developing{background:var(--warn-bg);color:var(--amber)}
+.score-pill.review{background:var(--error-bg);color:var(--rose)}
+
+/* Confidence */
+.confidence-bar{display:flex;gap:.5rem;margin:.5rem 0 1rem;flex-wrap:wrap}
+.conf-btn{padding:.45rem 1rem;border-radius:99px;font-size:.8rem;background:rgba(255,255,255,.06);color:var(--text2);transition:var(--transition);border:1px solid rgba(255,255,255,.06)}
+.conf-btn:hover{background:rgba(255,255,255,.12)}
+.conf-btn.selected{color:var(--white);font-weight:600;border-color:transparent}
+.conf-btn.selected.c-strong{background:var(--emerald-g);box-shadow:0 4px 15px rgba(52,211,153,.3)}
+.conf-btn.selected.c-developing{background:var(--amber-g);box-shadow:0 4px 15px rgba(251,191,36,.3)}
+.conf-btn.selected.c-review{background:var(--rose-g);box-shadow:0 4px 15px rgba(251,113,133,.3)}
+
+/* Badges */
+.badge-row{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin:1rem 0}
+.badge-item{width:68px;height:68px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.5rem;transition:var(--transition);position:relative}
+.badge-item .badge-label{font-size:.55rem;font-weight:600;margin-top:2px;color:var(--white);text-align:center}
+.badge-item.earned{box-shadow:0 0 25px rgba(56,189,248,.35);animation:badgePop .6s cubic-bezier(.4,0,.2,1)}
+.badge-item.locked{background:rgba(255,255,255,.05);opacity:.35;border:1px dashed rgba(255,255,255,.15)}
+@keyframes badgePop{0%{transform:scale(0) rotate(-20deg)}60%{transform:scale(1.15) rotate(5deg)}100%{transform:scale(1) rotate(0deg)}}
+
+/* Mastery grid */
+.mastery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.75rem;margin:1rem 0}
+.mastery-item{padding:.85rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:space-between;font-size:.85rem}
+
+/* Output */
+.output-box{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);padding:1rem;font-size:.83rem;line-height:1.65;white-space:pre-wrap;max-height:300px;overflow-y:auto;margin:.75rem 0;font-family:'DM Sans',sans-serif}
+.copy-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--emerald-g);color:var(--white);padding:.7rem 1.8rem;border-radius:99px;font-weight:600;font-size:.88rem;z-index:300;box-shadow:0 8px 30px rgba(52,211,153,.4);animation:toastIn .35s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* Recorder */
+.recorder-wrap{text-align:center;padding:1.5rem}
+.rec-btn{width:66px;height:66px;border-radius:50%;font-size:1.5rem;transition:var(--transition)}
+.rec-btn.recording{animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(251,113,133,.4)}50%{box-shadow:0 0 0 16px rgba(251,113,133,0)}}
+
+/* Nav */
+.nav-row{display:flex;justify-content:space-between;margin-top:2.5rem;gap:1rem;flex-wrap:wrap}
+
+textarea{font-family:'DM Sans',sans-serif;background:rgba(255,255,255,.04);color:var(--text);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);padding:.85rem;width:100%;resize:vertical;font-size:.88rem;transition:var(--transition)}
+textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 15px rgba(56,189,248,.15)}
+
+/* Celebration */
+.celebration{position:fixed;inset:0;pointer-events:none;z-index:500}
+.confetti{position:absolute;border-radius:3px;animation:confettiFall var(--dur,2s) ease forwards}
+@keyframes confettiFall{0%{opacity:1;transform:translateY(-20px) rotate(0deg) scale(1)}100%{opacity:0;transform:translateY(100vh) rotate(var(--rot,720deg)) scale(.3)}}
+
+/* Responsive */
+@media(max-width:640px){
+.app-wrapper{padding:.5rem}
+.top-bar{padding:.6rem .8rem}
+.match-area{flex-direction:column}
+.eob-table{font-size:.68rem}
+.eob-table th,.eob-table td{padding:.35rem .25rem}
+.concept-grid{grid-template-columns:1fr}
+.mastery-grid{grid-template-columns:1fr}
+}
+
+/* Colorful section badges */
+.sec-badge-1{background:var(--coral-g)}
+.sec-badge-2{background:var(--sky-g)}
+.sec-badge-3{background:var(--violet-g)}
+.sec-badge-4{background:var(--emerald-g)}
+.sec-badge-5{background:var(--amber-g)}
+.sec-badge-6{background:var(--pink-g)}
+.sec-badge-7{background:var(--teal-g)}
+
+/* Sort chip color cycling */
+.sort-chip:nth-child(odd){background:rgba(167,139,250,.15);border-color:rgba(167,139,250,.2);color:var(--violet)}
+.sort-chip:nth-child(even){background:rgba(56,189,248,.15);border-color:rgba(56,189,248,.2);color:var(--sky)}
+.sort-chip:nth-child(3n){background:rgba(244,114,182,.15);border-color:rgba(244,114,182,.2);color:var(--pink)}
+.sort-chip.placed-in{background:rgba(52,211,153,.2)!important;border-color:var(--emerald)!important;color:var(--emerald)!important}
+</style>
+</head>
+<body>
+
+<div class="app-wrapper" id="app">
+<div class="top-bar">
+<div class="logo">Insurance Basics</div>
+<div class="progress-wrap">
+<div class="progress-bar-outer"><div class="progress-bar-inner" id="mainProgress"></div></div>
+<div class="progress-label" id="progressLabel">0 / 7 sections</div>
+</div>
+<div class="controls">
+<button class="icon-btn" id="soundToggle" title="Toggle Sound" onclick="toggleSound()">🔊</button>
+<button class="icon-btn" id="resetBtn" title="Reset Progress" onclick="resetProgress()">↺</button>
+</div>
+</div>
+
+<div class="section-dots" id="sectionDots"></div>
+
+<!-- ============ SEC 1: WELCOME ============ -->
+<div class="section active" id="sec1">
+<div class="section-header">
+<div class="sec-badge sec-badge-1">Section 1 · Welcome</div>
+<h1 style="margin-top:.5rem">Let's Learn Insurance</h1>
+<p>Build real understanding of how health insurance works — concepts every Medical Assistant must know.</p>
+</div>
+<div class="card" style="text-align:center">
+<h3 style="margin-bottom:.75rem">What do you already know?</h3>
+<p style="color:var(--text2);margin-bottom:1rem;font-size:.9rem">Click each term you could explain to a patient right now.</p>
+<div id="priorKnowledge" style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center"></div>
+<p style="color:var(--text3);font-size:.82rem;margin-top:1rem" id="priorFeedback"></p>
+</div>
+<div class="card">
+<h3 style="margin-bottom:.5rem">How this lesson works</h3>
+<p style="color:var(--text2);font-size:.9rem">You'll move through <strong>7 stations</strong>, each teaching differently — flip cards, matching, scenarios, an interactive EOB, and more. Wrong answers are fine — they help you learn. Take your time.</p>
+</div>
+<div class="nav-row"><span></span><button class="btn btn-primary" onclick="goToSection(2)">Let's Begin →</button></div>
+</div>
+
+<!-- ============ SEC 2: CORE CONCEPTS ============ -->
+<div class="section" id="sec2">
+<div class="section-header">
+<div class="sec-badge sec-badge-2">Section 2 · Core Concepts</div>
+<h2>The Building Blocks</h2>
+<p>Click each card to learn the concept. Explore all cards to continue.</p>
+</div>
+<div class="concept-grid" id="conceptGrid"></div>
+<div id="conceptProgress" style="text-align:center;margin:1rem 0;color:var(--text3);font-size:.85rem"></div>
+<div class="nav-row">
+<button class="btn btn-secondary" onclick="goToSection(1)">← Back</button>
+<button class="btn btn-primary" id="sec2Next" disabled onclick="goToSection(3)">Continue →</button>
+</div>
+</div>
+
+<!-- ============ SEC 3: CONCEPT CHECKS ============ -->
+<div class="section" id="sec3">
+<div class="section-header">
+<div class="sec-badge sec-badge-3">Section 3 · Concept Checks</div>
+<h2>Check Your Understanding</h2>
+<p>Answer each question for instant feedback with rationale.</p>
+</div>
+<div id="quizArea"></div>
+<div id="sec3Score" style="text-align:center;margin:1rem 0"></div>
+<div class="nav-row">
+<button class="btn btn-secondary" onclick="goToSection(2)">← Back</button>
+<button class="btn btn-primary" id="sec3Next" disabled onclick="goToSection(4)">Continue →</button>
+</div>
+</div>
+
+<!-- ============ SEC 4: MATCHING + SORTING ============ -->
+<div class="section" id="sec4">
+<div class="section-header">
+<div class="sec-badge sec-badge-4">Section 4 · Interactive Reinforcement</div>
+<h2>Match & Sort</h2>
+<p>Connect terms to real-world examples and sort who pays what.</p>
+</div>
+<h3 style="margin-bottom:.75rem">Part A: Matching Game</h3>
+<p style="color:var(--text2);font-size:.88rem;margin-bottom:1rem">Click a term on the left, then click its matching example on the right.</p>
+<div class="match-area" id="matchArea"></div>
+<div id="matchFeedback" style="text-align:center;margin:.75rem 0;font-size:.88rem"></div>
+
+<h3 style="margin:2.5rem 0 .75rem">Part B: Who Pays?</h3>
+<p style="color:var(--text2);font-size:.88rem;margin-bottom:1rem">Drag (or tap to select, then tap a bucket) each item into the correct category.</p>
+<div id="sortSourceArea" style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem;min-height:45px;padding:.5rem;background:rgba(255,255,255,.02);border-radius:var(--radius-sm)"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+<div>
+<h4 style="text-align:center;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;color:var(--coral)">Patient Pays</h4>
+<div class="sort-bucket" id="bucketPatient"></div>
+</div>
+<div>
+<h4 style="text-align:center;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;color:var(--sky)">Insurance Pays</h4>
+<div class="sort-bucket" id="bucketInsurance"></div>
+</div>
+</div>
+<div style="text-align:center;margin-top:1rem"><button class="btn btn-sm btn-primary" onclick="checkSort()">Check My Answers</button></div>
+<div id="sortFeedback" style="text-align:center;margin:.75rem 0;font-size:.88rem"></div>
+<div id="sec4Score" style="text-align:center;margin:1rem 0"></div>
+<div class="nav-row">
+<button class="btn btn-secondary" onclick="goToSection(3)">← Back</button>
+<button class="btn btn-primary" id="sec4Next" disabled onclick="goToSection(5)">Continue →</button>
+</div>
+</div>
+
+<!-- ============ SEC 5: EOB DEEP DIVE ============ -->
+<div class="section" id="sec5">
+<div class="section-header">
+<div class="sec-badge sec-badge-5">Section 5 · EOB Deep Dive</div>
+<h2>Explanation of Benefits</h2>
+<p>Explore a realistic mock EOB. Click any cell to inspect what it means.</p>
+</div>
+
+<div class="card" style="border-left:4px solid var(--amber)">
+<h3 style="margin-bottom:.5rem;color:var(--amber)">What is an EOB?</h3>
+<p style="color:var(--text2);font-size:.9rem">An Explanation of Benefits is a document from the insurance company showing how a claim was processed. <strong style="color:var(--rose)">It is NOT a bill.</strong> It tells everyone — patient and provider — what was billed, what insurance allowed, what was paid, and what the patient owes.</p>
+</div>
+
+<div class="eob-container" id="eobContainer">
+<div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+<div>
+<h4 style="margin:0;color:#1e293b">Explanation of Benefits</h4>
+<div style="font-size:.76rem;color:#64748b">BlueCross Sample Plan · Statement Date: 03/15/2026</div>
+</div>
+<div style="font-size:.73rem;color:#64748b;text-align:right">
+<div><strong>Patient:</strong> Maria Garcia</div>
+<div><strong>Member ID:</strong> BCX-994210</div>
+<div><strong>Provider:</strong> Downtown Medical Clinic</div>
+</div>
+</div>
+<table class="eob-table">
+<thead><tr>
+<th>Service</th><th>Date</th><th>Billed</th><th>Allowed</th><th>Adjust.</th><th>Deduct.</th><th>Coins.</th><th>Copay</th><th>Plan Paid</th><th style="color:#dc2626">You Owe</th>
+</tr></thead>
+<tbody id="eobTableBody"></tbody>
+<tfoot>
+<tr style="font-weight:700;border-top:2px solid #334155">
+<td colspan="2">TOTALS</td>
+<td class="eob-cell-highlight" data-eob="total_billed">$685.00</td>
+<td class="eob-cell-highlight" data-eob="total_allowed">$452.00</td>
+<td class="eob-cell-highlight" data-eob="total_adj">$233.00</td>
+<td class="eob-cell-highlight" data-eob="total_ded">$100.00</td>
+<td class="eob-cell-highlight" data-eob="total_coins">$70.40</td>
+<td class="eob-cell-highlight" data-eob="total_copay">$30.00</td>
+<td class="eob-cell-highlight" data-eob="total_paid">$251.60</td>
+<td class="eob-cell-highlight" data-eob="total_owe" style="color:#dc2626;font-weight:800">$200.40</td>
+</tr>
+</tfoot>
+</table>
+<div style="margin-top:.75rem;padding:.75rem;background:linear-gradient(135deg,#fef2f2,#fff1f2);border-radius:8px;font-size:.78rem;color:#991b1b;border:1px solid #fecaca">
+<strong>⚠ This is NOT a bill.</strong> This statement shows how your claim was processed. You may receive a separate bill from your provider for the amount you owe.
+</div>
+</div>
+
+<div style="text-align:center;margin:1.25rem 0;font-size:.85rem" id="eobExploreCount">
+<span style="color:var(--amber)">🔍</span> Click cells above to explore — <strong>0 / 10</strong> inspected
+</div>
+
+<h3 style="margin:2.5rem 0 .75rem;color:var(--amber)">EOB Interpretation Challenge</h3>
+<p style="color:var(--text2);font-size:.88rem;margin-bottom:1rem">Now answer questions about the EOB above.</p>
+<div id="eobQuizArea"></div>
+<div id="sec5Score" style="text-align:center;margin:1rem 0"></div>
+<div class="nav-row">
+<button class="btn btn-secondary" onclick="goToSection(4)">← Back</button>
+<button class="btn btn-primary" id="sec5Next" disabled onclick="goToSection(6)">Continue →</button>
+</div>
+</div>
+<div class="eob-overlay" id="eobOverlay" onclick="closeEobPopup()"></div>
+<div class="eob-popup" id="eobPopup">
+<button class="close-popup" onclick="closeEobPopup()">✕</button>
+<h4 id="eobPopupTitle"></h4>
+<p id="eobPopupBody" style="color:var(--text2);font-size:.9rem;line-height:1.7"></p>
+</div>
+
+<!-- ============ SEC 6: WORKPLACE ============ -->
+<div class="section" id="sec6">
+<div class="section-header">
+<div class="sec-badge sec-badge-6">Section 6 · Real-World Practice</div>
+<h2>Workplace Scenarios</h2>
+<p>Patients will ask you these questions. Choose the best response.</p>
+</div>
+<div id="scenarioArea"></div>
+<div id="sec6Score" style="text-align:center;margin:1rem 0"></div>
+<div class="nav-row">
+<button class="btn btn-secondary" onclick="goToSection(5)">← Back</button>
+<button class="btn btn-primary" id="sec6Next" disabled onclick="goToSection(7)">Continue →</button>
+</div>
+</div>
+
+<!-- ============ SEC 7: REFLECTION ============ -->
+<div class="section" id="sec7">
+<div class="section-header">
+<div class="sec-badge sec-badge-7">Section 7 · Reflection & Report</div>
+<h2>Your Learning Summary</h2>
+</div>
+
+<div class="card" style="border-left:4px solid var(--teal)">
+<h3 style="margin-bottom:.75rem;color:var(--teal)">Confidence Check</h3>
+<p style="color:var(--text2);font-size:.85rem;margin-bottom:1rem">Rate your understanding of each concept.</p>
+<div id="confidenceArea"></div>
+</div>
+
+<div class="card" style="border-left:4px solid var(--violet)">
+<h3 style="margin-bottom:.75rem;color:var(--violet)">Section Mastery</h3>
+<div class="mastery-grid" id="masteryGrid"></div>
+</div>
+
+<div class="card" style="border-left:4px solid var(--amber)">
+<h3 style="margin-bottom:.75rem;color:var(--amber)">Badges Earned</h3>
+<div class="badge-row" id="badgeRow"></div>
+</div>
+
+<div class="card" style="border-left:4px solid var(--sky)">
+<h3 style="margin-bottom:.75rem;color:var(--sky)">Performance Summary</h3>
+<div class="output-box" id="perfSummary"></div>
+<button class="btn btn-sm btn-secondary" onclick="copyText('perfSummary')">📋 Copy Summary</button>
+</div>
+
+<div class="card" style="border-left:4px solid var(--pink)">
+<h3 style="margin-bottom:.75rem;color:var(--pink)">Your Reflection</h3>
+<p style="color:var(--text2);font-size:.85rem;margin-bottom:.75rem">What did you learn? What helped? What's still confusing?</p>
+<textarea id="reflectionText" rows="5" placeholder="Write your reflection here..."></textarea>
+<div class="output-box" id="reflectionOutput" style="display:none"></div>
+<div style="display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap">
+<button class="btn btn-sm btn-secondary" onclick="generateReflection()">Generate Reflection Summary</button>
+<button class="btn btn-sm btn-secondary" onclick="copyText('reflectionOutput')" id="copyReflBtn" style="display:none">📋 Copy Reflection</button>
+</div>
+</div>
+
+<div class="card" style="border-left:4px solid var(--emerald)">
+<h3 style="margin-bottom:.75rem;color:var(--emerald)">Copy Everything for Amplify</h3>
+<div class="output-box" id="fullOutput"></div>
+<button class="btn btn-success" onclick="copyText('fullOutput')">📋 Copy Everything</button>
+</div>
+
+<div class="card" style="border-left:4px solid var(--coral)">
+<h3 style="margin-bottom:.75rem;color:var(--coral)">Voice Reflection</h3>
+<p style="color:var(--text2);font-size:.85rem;margin-bottom:.75rem">Record a short spoken reflection about what you learned.</p>
+<div class="recorder-wrap">
+<button class="rec-btn icon-btn" id="recStartBtn" onclick="startRecording()" title="Start Recording" style="background:var(--coral-g);color:white;font-size:1.3rem;width:66px;height:66px">⏺</button>
+<button class="rec-btn icon-btn" id="recStopBtn" onclick="stopRecording()" title="Stop Recording" style="display:none;background:rgba(255,255,255,.1);color:var(--text);font-size:1.3rem;width:66px;height:66px">⏹</button>
+<p style="font-size:.78rem;color:var(--text3);margin-top:.5rem" id="recStatus">Click to record</p>
+<audio id="recPlayback" controls style="display:none;margin:1rem auto;max-width:100%"></audio>
+<div style="margin-top:.5rem;display:none" id="recActions">
+<button class="btn btn-sm btn-secondary" onclick="clearRecording()">Clear Recording</button>
+</div>
+</div>
+</div>
+
+<div class="nav-row">
+<button class="btn btn-secondary" onclick="goToSection(6)">← Back</button>
+<button class="btn btn-success" onclick="celebrate()">🎓 Complete Lesson</button>
+</div>
+</div>
+
+</div>
+<div class="celebration" id="celebrationLayer"></div>
+
+<script>
+// ========== SHUFFLE UTILITY ==========
+function shuffleArray(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleOptions(q){
+  // Takes {q,options,correct,rationale} where correct is the INDEX of the right answer
+  // Returns new object with shuffled options and updated correct index
+  const indices = q.options.map((_,i)=>i);
+  const shuffled = shuffleArray(indices);
+  const newOptions = shuffled.map(i=>q.options[i]);
+  const newCorrect = shuffled.indexOf(q.correct);
+  return {...q, options:newOptions, correct:newCorrect, _shuffled:true};
+}
+
+// ========== STATE ==========
+const STATE = {
+  currentSection:1,totalSections:7,soundOn:true,
+  scores:{sec3:0,sec3Total:0,sec4Match:0,sec4Sort:0,sec4Total:0,sec5Explore:0,sec5Quiz:0,sec5Total:0,sec6:0,sec6Total:0},
+  conceptsFlipped:new Set(),priorTerms:new Set(),confidenceRatings:{},
+  sectionsCompleted:new Set(),
+  quizAnswered:{sec3:new Set(),sec5:new Set(),sec6:new Set()}
+};
+
+// ========== SOUND ==========
+let audioCtx;
+function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function playSound(type){
+  if(!STATE.soundOn)return;
+  try{
+    const ctx=getAudioCtx();ctx.resume();
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);g.gain.value=.07;
+    if(type==='correct'){o.frequency.value=523;o.type='sine';o.start();o.frequency.exponentialRampToValueAtTime(784,ctx.currentTime+.15);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.3);o.stop(ctx.currentTime+.3);}
+    else if(type==='wrong'){o.frequency.value=300;o.type='triangle';o.start();o.frequency.exponentialRampToValueAtTime(200,ctx.currentTime+.2);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.3);o.stop(ctx.currentTime+.3);}
+    else if(type==='click'){o.frequency.value=660;o.type='sine';o.start();g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.07);o.stop(ctx.currentTime+.08);}
+    else if(type==='celebrate'){[523,659,784,1047].forEach((f,i)=>{const o2=ctx.createOscillator(),g2=ctx.createGain();o2.connect(g2);g2.connect(ctx.destination);o2.frequency.value=f;o2.type='sine';g2.gain.value=.05;o2.start(ctx.currentTime+i*.12);g2.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+i*.12+.4);o2.stop(ctx.currentTime+i*.12+.4);});o.stop(ctx.currentTime);}
+  }catch(e){}
+}
+function toggleSound(){STATE.soundOn=!STATE.soundOn;document.getElementById('soundToggle').textContent=STATE.soundOn?'🔊':'🔇'}
+
+// ========== NAV ==========
+function goToSection(n){
+  if(n<1||n>STATE.totalSections)return;
+  if(n>STATE.currentSection)STATE.sectionsCompleted.add(STATE.currentSection);
+  STATE.currentSection=n;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec'+n).classList.add('active');
+  updateProgress();playSound('click');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n===7)generateReport();
+  saveState();
+}
+function updateProgress(){
+  const pct=(STATE.sectionsCompleted.size/STATE.totalSections*100);
+  document.getElementById('mainProgress').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent=STATE.sectionsCompleted.size+' / '+STATE.totalSections+' sections';
+  const dots=document.getElementById('sectionDots');dots.innerHTML='';
+  for(let i=1;i<=STATE.totalSections;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===STATE.currentSection?' active':'')+(STATE.sectionsCompleted.has(i)?' completed':'');
+    d.onclick=()=>goToSection(i);dots.appendChild(d);
+  }
+}
+
+// ========== SEC 1: PRIOR KNOWLEDGE ==========
+const TERMS=['Premium','Deductible','Copay','Coinsurance','Out-of-Pocket Max','Policyholder','Subscriber','Dependent','Payer','Provider','Claim','Adjudication','EOB'];
+const CHIP_COLORS=[
+  {bg:'rgba(255,107,107,.15)',border:'rgba(255,107,107,.3)',color:'var(--coral)'},
+  {bg:'rgba(56,189,248,.15)',border:'rgba(56,189,248,.3)',color:'var(--sky)'},
+  {bg:'rgba(167,139,250,.15)',border:'rgba(167,139,250,.3)',color:'var(--violet)'},
+  {bg:'rgba(52,211,153,.15)',border:'rgba(52,211,153,.3)',color:'var(--emerald)'},
+  {bg:'rgba(251,191,36,.15)',border:'rgba(251,191,36,.3)',color:'var(--amber)'},
+  {bg:'rgba(244,114,182,.15)',border:'rgba(244,114,182,.3)',color:'var(--pink)'},
+  {bg:'rgba(45,212,191,.15)',border:'rgba(45,212,191,.3)',color:'var(--teal)'},
+  {bg:'rgba(251,146,60,.15)',border:'rgba(251,146,60,.3)',color:'var(--orange)'},
+  {bg:'rgba(129,140,248,.15)',border:'rgba(129,140,248,.3)',color:'var(--indigo)'},
+  {bg:'rgba(163,230,53,.15)',border:'rgba(163,230,53,.3)',color:'var(--lime)'},
+  {bg:'rgba(251,113,133,.15)',border:'rgba(251,113,133,.3)',color:'var(--rose)'},
+  {bg:'rgba(34,211,238,.15)',border:'rgba(34,211,238,.3)',color:'var(--cyan)'},
+  {bg:'rgba(255,107,107,.15)',border:'rgba(255,107,107,.3)',color:'var(--coral)'},
+];
+function initPriorKnowledge(){
+  const c=document.getElementById('priorKnowledge');
+  TERMS.forEach((t,i)=>{
+    const b=document.createElement('button');
+    const col=CHIP_COLORS[i%CHIP_COLORS.length];
+    b.style.cssText=`display:inline-block;padding:.55rem 1.1rem;border-radius:99px;font-size:.84rem;margin:.3rem;cursor:pointer;transition:all .3s;user-select:none;background:${col.bg};border:1px solid ${col.border};color:${col.color};font-weight:500;font-family:inherit`;
+    b.textContent=t;
+    b.onclick=()=>{
+      const isOn=b.dataset.on==='1';
+      if(isOn){b.dataset.on='0';b.style.background=col.bg;b.style.boxShadow='none';b.style.transform='scale(1)';STATE.priorTerms.delete(t);}
+      else{b.dataset.on='1';b.style.background=col.border;b.style.color='var(--white)';b.style.boxShadow=`0 4px 15px ${col.border}`;b.style.transform='scale(1.05)';STATE.priorTerms.add(t);}
+      const fb=document.getElementById('priorFeedback');
+      const n=STATE.priorTerms.size;
+      if(n===0)fb.textContent='';
+      else if(n<=3)fb.textContent="You recognize a few terms — that's a great start!";
+      else if(n<=8)fb.textContent='Nice! You have background knowledge to build on.';
+      else fb.textContent="You know many terms already! Let's deepen that understanding.";
+      playSound('click');
+    };
+    c.appendChild(b);
+  });
+}
+
+// ========== SEC 2: CONCEPT CARDS ==========
+const CARD_THEMES=['cc-coral','cc-sky','cc-violet','cc-emerald','cc-amber','cc-pink','cc-teal','cc-orange','cc-indigo','cc-lime','cc-rose','cc-cyan'];
+const CARD_ICONS=['💰','🎯','💳','📊','🛡️','📋','👤','👨‍👩‍👧','🏢','🏥','📄','⚖️'];
+const CONCEPTS=[
+  {term:'Premium',short:'Your monthly membership fee',detail:'A premium is the amount you pay regularly (usually monthly) to keep your insurance active. You pay it whether or not you see a doctor. Think of it like a gym membership — you pay to keep access, not per visit.',why:'Patients may ask why they pay a bill if they "already pay for insurance." The premium keeps coverage active — it doesn\'t cover specific services.'},
+  {term:'Deductible',short:'What you pay first',detail:'The deductible is the amount a patient must pay out-of-pocket for covered services before insurance starts sharing the cost. Example: $500 deductible means the patient pays the first $500 of eligible costs each year.',why:'You\'ll see this on EOBs. When the deductible hasn\'t been met, insurance won\'t pay its share yet. Patients are responsible for the full allowed amount.'},
+  {term:'Copay',short:'A fixed amount per visit',detail:'A copay is a set flat fee the patient pays at time of service. For example, $30 for primary care or $50 for a specialist. The amount doesn\'t change regardless of what happens during the visit.',why:'At the front desk, you\'ll collect copays before or after appointments. It\'s one of the most common patient interactions you\'ll have.'},
+  {term:'Coinsurance',short:'Your percentage share',detail:'Coinsurance is the percentage of costs the patient pays after meeting their deductible. If a plan has 80/20 coinsurance, insurance pays 80% and the patient pays 20% of the allowed amount.',why:'Patients often confuse coinsurance with copay. Copay = flat dollar amount. Coinsurance = percentage. Coinsurance kicks in only after the deductible is met.'},
+  {term:'Out-of-Pocket Maximum',short:'Your annual spending ceiling',detail:'This is the most a patient will pay in a year for covered services. Once reached, insurance pays 100% of remaining covered costs. Includes deductibles, copays, and coinsurance — but NOT premiums.',why:'This protects patients from catastrophic costs. If a patient has hit their max, remaining claims that year are fully covered.'},
+  {term:'Policyholder / Subscriber',short:'The person who owns the plan',detail:'The policyholder (or subscriber) is the person whose name is on the insurance policy — typically through their employer or marketplace. They may cover themselves alone or add family members.',why:'When verifying insurance, you need to know who the subscriber is. The patient in front of you may be a dependent, not the subscriber.'},
+  {term:'Dependent',short:'Covered under someone else\'s plan',detail:'A dependent is a person covered under the subscriber\'s plan — often a spouse or child. They receive benefits through the policyholder\'s coverage but aren\'t the primary plan owner.',why:'You\'ll enter dependent information frequently when verifying insurance. Children are commonly covered as dependents up to age 26.'},
+  {term:'Payer',short:'The insurance company',detail:'The payer is the entity (usually an insurance company) responsible for paying claims. Examples: UnitedHealthcare, Aetna, Cigna, Medicaid, Medicare. They decide what gets covered and how much they pay.',why:'You submit claims TO the payer. Understanding who the payer is helps route claims correctly.'},
+  {term:'Provider',short:'The doctor, clinic, or facility',detail:'The provider is the person or organization that delivers healthcare services — a physician, NP, hospital, lab, or clinic. They bill the payer for services rendered.',why:'In your role, YOU work for the provider. Your clinic bills the payer on behalf of the patient.'},
+  {term:'Claim',short:'The bill sent to insurance',detail:'A claim is a formal request submitted by the provider to the payer asking for payment for services rendered. It includes procedure codes, diagnosis codes, dates, and charges.',why:'Claims are central to medical billing. If a claim is denied, the MA may help gather information for resubmission.'},
+  {term:'Adjudication',short:'Insurance reviews the claim',detail:'Adjudication is the process by which the payer reviews a submitted claim and decides what to pay, deny, or request more info about. The result is reflected on the EOB.',why:'Understanding adjudication helps you explain to patients why certain services were denied or partially paid.'},
+  {term:'EOB',short:'Your claim report card',detail:'An EOB (Explanation of Benefits) is a document the payer sends after processing a claim. It shows billed amounts, allowed amounts, what insurance paid, and what the patient owes. It is NOT a bill.',why:'Patients often call confused about EOBs. Knowing how to read one and explain it simply is a core MA skill.'},
+];
+function initConcepts(){
+  const g=document.getElementById('conceptGrid');
+  CONCEPTS.forEach((c,i)=>{
+    const div=document.createElement('div');
+    div.className='concept-card '+CARD_THEMES[i%CARD_THEMES.length];
+    div.innerHTML=`<div class="card-icon">${CARD_ICONS[i]}</div><div class="term">${c.term}</div><div class="peek">${c.short}</div><div class="detail"><p>${c.detail}</p><div class="why-box"><div class="why-label">Why it matters</div>${c.why}</div></div><div class="flip-hint">tap to learn ›</div>`;
+    div.onclick=()=>{div.classList.toggle('flipped');if(div.classList.contains('flipped')){STATE.conceptsFlipped.add(i);playSound('click');}updateConceptProgress();};
+    g.appendChild(div);
+  });
+  updateConceptProgress();
+}
+function updateConceptProgress(){
+  const n=STATE.conceptsFlipped.size,total=CONCEPTS.length;
+  document.getElementById('conceptProgress').textContent=`${n} / ${total} concepts explored`;
+  document.getElementById('sec2Next').disabled=n<total;
+}
+
+// ========== SEC 3: QUIZ (RANDOMIZED) ==========
+const QUIZ_Q_RAW=[
+  {q:'A patient says: "I pay $250 every month for my insurance." What term is this?',
+   options:['Copay','Premium','Deductible','Coinsurance'],correct:1,
+   rationale:'The monthly payment to keep insurance active is the premium. It\'s paid regardless of whether services are used.'},
+  {q:'Maria has a $1,000 deductible. She has paid $400 toward it this year. Her lab work costs $300 (allowed amount). How much does insurance pay for this lab work?',
+   options:['$300','$200','$100','$0'],correct:3,
+   rationale:'Maria has only paid $400 of her $1,000 deductible. The $300 lab work brings her to $700 — still under the deductible. Insurance pays $0 and Maria pays the full $300 allowed amount.'},
+  {q:'What is the difference between a copay and coinsurance?',
+   options:['They are the same thing','Copay is a percentage, coinsurance is a flat fee','Copay applies before the deductible, coinsurance does not','Copay is a flat fee, coinsurance is a percentage'],correct:3,
+   rationale:'A copay is a fixed dollar amount (like $30). Coinsurance is a percentage of costs (like 20%). They work differently and apply in different situations.'},
+  {q:'An EOB arrives in the mail. The patient panics and thinks it\'s a bill. What should you explain?',
+   options:['Tell them to pay it immediately','Tell them to ignore it','Tell them it is a bill from the insurance company','Explain that an EOB is not a bill — it shows how the claim was processed'],correct:3,
+   rationale:'An EOB is NOT a bill. It\'s a summary from the insurer showing what was billed, what was covered, and what the patient may owe. The actual bill comes separately from the provider.'},
+  {q:'Who is the "payer" in health insurance?',
+   options:['The patient','The employer','The insurance company','The doctor'],correct:2,
+   rationale:'The payer is the insurance company (e.g., Aetna, Cigna, Medicare). They process and pay claims submitted by providers.'},
+  {q:'A child is covered under their parent\'s insurance plan. The child is a:',
+   options:['Subscriber','Dependent','Policyholder','Payer'],correct:1,
+   rationale:'A dependent is someone covered under another person\'s (the subscriber\'s) insurance plan. Children are commonly covered as dependents.'},
+  {q:'What does "adjudication" mean in insurance?',
+   options:['The patient paying their bill','The doctor ordering a test','Submitting a claim to the insurance company','The process where insurance reviews and decides on a claim'],correct:3,
+   rationale:'Adjudication is the payer\'s process of reviewing a submitted claim and determining what to pay, deny, or pend. The outcome is reflected on the EOB.'},
+  {q:'A patient\'s plan has an 80/20 coinsurance split. After meeting their deductible, a $500 procedure (allowed amount) is performed. How much does the patient owe in coinsurance?',
+   options:['$80','$100','$400','$500'],correct:1,
+   rationale:'With 80/20 coinsurance, insurance pays 80% ($400) and the patient pays 20% ($100). This only applies after the deductible has been met.'},
+];
+// Shuffle each question's options
+const QUIZ_Q = QUIZ_Q_RAW.map(q => shuffleOptions(q));
+
+function initQuiz(){
+  const area=document.getElementById('quizArea');
+  QUIZ_Q.forEach((q,qi)=>{
+    const div=document.createElement('div');div.className='card';div.id='quiz3_'+qi;
+    const optHTML=q.options.map((o,oi)=>`<button class="option-btn" onclick="answerQuiz(3,${qi},${oi})"><span class="marker">${String.fromCharCode(65+oi)}</span><span>${o}</span></button>`).join('');
+    div.innerHTML=`<p style="font-weight:600;margin-bottom:1rem;font-size:.95rem">${qi+1}. ${q.q}</p>${optHTML}<div class="rationale" id="rat3_${qi}"></div>`;
+    area.appendChild(div);
+  });
+}
+
+function answerQuiz(sec,qi,oi){
+  const key='sec'+sec;
+  if(STATE.quizAnswered[key].has(qi))return;
+  STATE.quizAnswered[key].add(qi);
+  const questions=sec===3?QUIZ_Q:sec===5?EOB_QUIZ:SCENARIO_Q;
+  const q=questions[qi];
+  const isCorrect=oi===q.correct;
+  if(isCorrect){STATE.scores[key]++;playSound('correct');}else{playSound('wrong');}
+  const prefix=sec===3?'quiz3_':sec===5?'eobQ_':'scen_';
+  const ratPrefix=sec===3?'rat3_':sec===5?'ratE_':'ratS_';
+  const card=document.getElementById(prefix+qi);
+  const btns=card.querySelectorAll('.option-btn');
+  btns.forEach((b,i)=>{
+    b.classList.add('chosen');
+    if(i===oi&&isCorrect)b.classList.add('correct-answer');
+    else if(i===oi&&!isCorrect)b.classList.add('wrong-answer');
+    if(i===q.correct)b.classList.add('reveal-correct');
+    b.style.pointerEvents='none';
+  });
+  const rat=document.getElementById(ratPrefix+qi);
+  rat.className='rationale show '+(isCorrect?'correct-r':'incorrect-r');
+  rat.innerHTML=(isCorrect?'<strong>✓ Correct!</strong> ':'<strong>✗ Not quite.</strong> ')+q.rationale;
+  const totalQ=questions.length;
+  const answered=STATE.quizAnswered[key].size;
+  if(sec===3)STATE.scores.sec3Total=totalQ;
+  if(sec===5){STATE.scores.sec5Quiz=STATE.scores.sec5;STATE.scores.sec5Total=totalQ;}
+  if(sec===6)STATE.scores.sec6Total=totalQ;
+  if(answered===totalQ){
+    const pct=Math.round(STATE.scores[key]/totalQ*100);
+    document.getElementById(key+'Score').innerHTML=`<span class="score-pill ${pct>=80?'strong':pct>=60?'developing':'review'}">${STATE.scores[key]}/${totalQ} — ${pct}%</span>`;
+    document.getElementById(key+'Next').disabled=false;
+    if(pct>=80)playSound('celebrate');
+  }
+}
+
+// ========== SEC 4: MATCHING ==========
+const MATCH_PAIRS=[
+  {term:'Premium',example:'"I pay $200/month even when I don\'t go to the doctor."'},
+  {term:'Deductible',example:'"I have to pay the first $1,000 before insurance helps."'},
+  {term:'Copay',example:'"I pay $30 every time I visit my doctor."'},
+  {term:'Coinsurance',example:'"After my deductible, I pay 20% of the cost."'},
+  {term:'EOB',example:'"I got a paper from insurance showing how my claim was processed."'},
+  {term:'Claim',example:'"The clinic submitted a request to my insurance for payment."'},
+];
+let matchSelected=null,matchedCount=0;
+function initMatch(){
+  const area=document.getElementById('matchArea');
+  const leftCol=document.createElement('div');leftCol.className='match-col';leftCol.innerHTML='<h4>Terms</h4>';
+  const rightCol=document.createElement('div');rightCol.className='match-col';rightCol.innerHTML='<h4>Examples</h4>';
+  const shuffledEx=shuffleArray(MATCH_PAIRS);
+  MATCH_PAIRS.forEach((p,i)=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.term;d.dataset.type='term';d.dataset.idx=i;
+    d.onclick=()=>selectMatch(d);leftCol.appendChild(d);
+  });
+  shuffledEx.forEach(p=>{
+    const origIdx=MATCH_PAIRS.findIndex(mp=>mp.term===p.term);
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.example;d.dataset.type='example';d.dataset.idx=origIdx;
+    d.style.fontSize='.82rem';
+    d.onclick=()=>selectMatch(d);rightCol.appendChild(d);
+  });
+  area.appendChild(leftCol);area.appendChild(rightCol);
+}
+function selectMatch(el){
+  if(el.classList.contains('matched'))return;
+  playSound('click');
+  if(!matchSelected){matchSelected=el;el.classList.add('selected');return;}
+  if(matchSelected.dataset.type===el.dataset.type){matchSelected.classList.remove('selected');matchSelected=el;el.classList.add('selected');return;}
+  if(matchSelected.dataset.idx===el.dataset.idx){
+    matchSelected.classList.remove('selected');matchSelected.classList.add('matched');el.classList.add('matched');
+    matchedCount++;STATE.scores.sec4Match++;playSound('correct');
+    document.getElementById('matchFeedback').innerHTML=`<span style="color:var(--emerald)">✓ Match! ${matchedCount}/${MATCH_PAIRS.length}</span>`;
+  }else{
+    el.classList.add('wrong-flash');matchSelected.classList.add('wrong-flash');playSound('wrong');
+    document.getElementById('matchFeedback').innerHTML=`<span style="color:var(--rose)">✗ Try again</span>`;
+    const ms=matchSelected;
+    setTimeout(()=>{el.classList.remove('wrong-flash');ms.classList.remove('wrong-flash');ms.classList.remove('selected');},420);
+    matchSelected=null;return;
+  }
+  matchSelected=null;
+  if(matchedCount===MATCH_PAIRS.length)checkSec4Complete();
+}
+
+// ========== SEC 4: SORTING ==========
+const SORT_ITEMS=[
+  {text:'Monthly premium payment',bucket:'patient'},
+  {text:'$30 copay at front desk',bucket:'patient'},
+  {text:'20% coinsurance share',bucket:'patient'},
+  {text:'First $500 of deductible',bucket:'patient'},
+  {text:'80% coinsurance share',bucket:'insurance'},
+  {text:'Allowed amount minus patient share',bucket:'insurance'},
+  {text:'Contractual adjustment / write-off',bucket:'insurance'},
+];
+let sortChecked=false;
+function initSort(){
+  const src=document.getElementById('sortSourceArea');
+  shuffleArray(SORT_ITEMS).forEach((item,i)=>{
+    const chip=document.createElement('div');
+    chip.className='sort-chip';chip.textContent=item.text;chip.draggable=true;
+    chip.dataset.bucket=item.bucket;chip.id='sortChip'+i;
+    chip.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',chip.id));
+    chip.addEventListener('click',()=>{
+      if(chip.parentElement.id==='sortSourceArea'){
+        document.querySelectorAll('.sort-chip.selected').forEach(c=>c.classList.remove('selected'));
+        chip.classList.add('selected');
+      }
+    });
+    src.appendChild(chip);
+  });
+  ['bucketPatient','bucketInsurance'].forEach(bId=>{
+    const b=document.getElementById(bId);
+    b.addEventListener('dragover',e=>{e.preventDefault();b.classList.add('drag-over');});
+    b.addEventListener('dragleave',()=>b.classList.remove('drag-over'));
+    b.addEventListener('drop',e=>{e.preventDefault();b.classList.remove('drag-over');const id=e.dataTransfer.getData('text/plain');const chip=document.getElementById(id);if(chip)b.appendChild(chip);});
+    b.addEventListener('click',()=>{const sel=document.querySelector('.sort-chip.selected');if(sel){b.appendChild(sel);sel.classList.remove('selected');}});
+  });
+}
+function checkSort(){
+  if(sortChecked)return;sortChecked=true;let correct=0;
+  const pB=document.getElementById('bucketPatient'),iB=document.getElementById('bucketInsurance');
+  document.querySelectorAll('.sort-chip').forEach(chip=>{
+    const inP=pB.contains(chip),inI=iB.contains(chip);
+    const expected=chip.dataset.bucket;
+    const ok=(expected==='patient'&&inP)||(expected==='insurance'&&inI);
+    if(ok){correct++;chip.style.borderColor='var(--emerald)';chip.style.background='var(--success-bg)';chip.style.color='var(--emerald)';}
+    else{chip.style.borderColor='var(--rose)';chip.style.background='var(--error-bg)';chip.style.color='var(--rose)';}
+  });
+  STATE.scores.sec4Sort=correct;
+  const total=SORT_ITEMS.length;
+  document.getElementById('sortFeedback').innerHTML=`<span class="score-pill ${correct>=total-1?'strong':correct>=total-3?'developing':'review'}">${correct}/${total} correct</span>`;
+  playSound(correct>=total-1?'correct':'wrong');
+  checkSec4Complete();
+}
+function checkSec4Complete(){
+  if(matchedCount>=MATCH_PAIRS.length&&sortChecked){
+    STATE.scores.sec4Total=MATCH_PAIRS.length+SORT_ITEMS.length;
+    const total=STATE.scores.sec4Match+STATE.scores.sec4Sort;
+    document.getElementById('sec4Score').innerHTML=`<span class="score-pill ${total>=10?'strong':total>=7?'developing':'review'}">Section total: ${total}/${STATE.scores.sec4Total}</span>`;
+    document.getElementById('sec4Next').disabled=false;
+  }
+}
+
+// ========== SEC 5: EOB ==========
+const EOB_ROWS=[
+  {service:'Office Visit (99213)',date:'03/01/2026',billed:'$185.00',allowed:'$120.00',adj:'$65.00',ded:'$0.00',coins:'$24.00',copay:'$30.00',paid:'$66.00',owe:'$54.00'},
+  {service:'Blood Draw (36415)',date:'03/01/2026',billed:'$45.00',allowed:'$32.00',adj:'$13.00',ded:'$0.00',coins:'$6.40',copay:'$0.00',paid:'$25.60',owe:'$6.40'},
+  {service:'CMP (80053)',date:'03/01/2026',billed:'$250.00',allowed:'$150.00',adj:'$100.00',ded:'$100.00',coins:'$10.00',copay:'$0.00',paid:'$40.00',owe:'$110.00'},
+  {service:'Lipid Panel (80061)',date:'03/01/2026',billed:'$205.00',allowed:'$150.00',adj:'$55.00',ded:'$0.00',coins:'$30.00',copay:'$0.00',paid:'$120.00',owe:'$30.00'},
+];
+const EOB_EXPLANATIONS={
+  billed:{title:'💵 Billed Amount',body:'This is the full amount the provider charged — their "sticker price." Insurance rarely pays this because of negotiated rates with in-network providers. Think of it like a hotel\'s "rack rate" vs. what you actually pay with a discount code.'},
+  allowed:{title:'✅ Allowed Amount',body:'The allowed amount is the maximum the insurance company recognizes for a covered service. It\'s the negotiated rate between payer and provider. The difference between billed and allowed is the contractual adjustment. This is the "real" number everything else is calculated from.'},
+  adj:{title:'📝 Contractual Adjustment',body:'The difference between what the provider billed and what insurance allows. In-network providers agree to "write off" this difference. The patient does NOT pay this. Formula: Billed − Allowed = Adjustment. This is a huge benefit of staying in-network!'},
+  ded:{title:'🎯 Deductible Applied',body:'The portion of the allowed amount applied toward the patient\'s annual deductible. The patient pays this until their full deductible is met for the year. Once met, coinsurance kicks in for the remaining allowed amounts.'},
+  coins:{title:'📊 Coinsurance',body:'After the deductible is met, this is the patient\'s percentage share of the remaining allowed amount. With 80/20 coverage, the patient pays 20%. This column shows how much of each service the patient owes as their percentage.'},
+  copay:{title:'💳 Copay',body:'A fixed amount the patient pays for certain services (like $30 for an office visit). Copays are separate from the deductible and coinsurance. They\'re typically collected at time of service — you\'ll collect these at the front desk!'},
+  paid:{title:'🏢 Plan Paid',body:'The amount the insurance company actually paid toward the service. Formula: Allowed − Deductible − Coinsurance − Copay = Plan Paid. This is what the insurance sends directly to the provider.'},
+  owe:{title:'⚠️ Patient Responsibility (You Owe)',body:'The total the patient is responsible for: Deductible + Coinsurance + Copay. This is what the patient should expect on their actual bill from the provider. The adjustment is NOT included — nobody pays that!'},
+  total_billed:{title:'💵 Total Billed',body:'Sum of all provider charges submitted. This total is almost always higher than what insurance allows because of contractual adjustments. Don\'t let patients panic about this number!'},
+  total_allowed:{title:'✅ Total Allowed',body:'Sum of all allowed amounts — the total the insurance recognizes. This is the real starting number for calculating patient responsibility and insurance payments.'},
+  total_adj:{title:'📝 Total Adjustment',body:'Total written off due to the contractual agreement. The patient does NOT pay this. This is why being "in-network" matters — it saved this patient $233!'},
+  total_ded:{title:'🎯 Total Deductible Applied',body:'$100 was applied from the CMP lab test, meaning the patient still had $100 remaining on their annual deductible at the time of service.'},
+  total_coins:{title:'📊 Total Coinsurance',body:'The patient\'s total percentage share across all services: $70.40 total in coinsurance charges after the deductible was met.'},
+  total_copay:{title:'💳 Total Copay',body:'Total flat-fee copays: $30 for the office visit. Only one service on this EOB had a copay.'},
+  total_paid:{title:'🏢 Total Plan Paid',body:'Total insurance paid toward all services: $251.60. This is what the payer sent to the provider on the patient\'s behalf.'},
+  total_owe:{title:'⚠️ Total Patient Responsibility',body:'Grand total: Deductible ($100) + Coinsurance ($70.40) + Copay ($30) = $200.40. This is what should appear on the patient\'s actual bill. Remember: this EOB is NOT the bill!'},
+};
+let eobInspected=new Set();
+function initEOB(){
+  const tbody=document.getElementById('eobTableBody');
+  const bgColors=['#fef2f2','#eff6ff','#f0fdf4','#fefce8'];
+  EOB_ROWS.forEach((r,ri)=>{
+    const tr=document.createElement('tr');tr.className='eob-row';tr.style.background=bgColors[ri];
+    ['service','date','billed','allowed','adj','ded','coins','copay','paid','owe'].forEach(col=>{
+      const td=document.createElement('td');td.textContent=r[col];
+      if(!['service','date'].includes(col)){td.className='eob-cell-highlight';td.dataset.eob=col;td.onclick=e=>{e.stopPropagation();showEobPopup(col);tr.classList.add('inspected');};}
+      if(col==='owe')td.style.color='#dc2626';
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  document.querySelectorAll('tfoot .eob-cell-highlight[data-eob]').forEach(cell=>{
+    cell.onclick=()=>showEobPopup(cell.dataset.eob);
+  });
+}
+function showEobPopup(key){
+  const info=EOB_EXPLANATIONS[key];if(!info)return;
+  eobInspected.add(key);
+  const unique=new Set([...eobInspected].map(k=>k.replace('total_','')));
+  STATE.scores.sec5Explore=Math.min(unique.size,10);
+  document.getElementById('eobExploreCount').innerHTML=`<span style="color:var(--amber)">🔍</span> Click cells to explore — <strong>${unique.size} / 10</strong> inspected`;
+  document.getElementById('eobPopupTitle').textContent=info.title;
+  document.getElementById('eobPopupBody').textContent=info.body;
+  document.getElementById('eobPopup').style.display='block';
+  document.getElementById('eobOverlay').classList.add('show');
+  playSound('click');
+}
+function closeEobPopup(){document.getElementById('eobPopup').style.display='none';document.getElementById('eobOverlay').classList.remove('show');}
+
+const EOB_QUIZ_RAW=[
+  {q:'Why is the "Billed Amount" different from the "Allowed Amount"?',
+   options:['The provider made a billing error','The patient chose to pay less','The insurance company negotiated a lower rate with the provider','The service was not covered'],correct:2,
+   rationale:'The difference reflects the contractual adjustment — the negotiated discount between in-network providers and the payer. The patient does NOT pay this difference.'},
+  {q:'On the CMP lab test, $100 was applied to the deductible. What does that mean?',
+   options:['The patient gets a $100 discount','Insurance paid $100','The patient must pay $100 before insurance shares this service\'s cost','The provider waived $100'],correct:2,
+   rationale:'The $100 deductible applied means the patient still had $100 remaining on their annual deductible. They pay that amount out-of-pocket before insurance coinsurance kicks in for the rest.'},
+  {q:'The total "You Owe" is $200.40. Is this EOB the actual bill?',
+   options:['No — the EOB is a summary, not a bill. The actual bill comes from the provider.','Yes, the patient should pay this amount to the insurance company','Yes, the EOB is always the bill','It depends on the insurance company'],correct:0,
+   rationale:'An EOB is NEVER a bill. It explains how the claim was processed. The patient waits for the actual bill from the provider, which should match the "You Owe" amount.'},
+  {q:'The total contractual adjustment is $233. Who pays this?',
+   options:['The patient','Nobody — the provider writes it off as part of their in-network agreement','The insurance company','The employer'],correct:1,
+   rationale:'The $233 is the amount the in-network provider agreed to write off. Nobody pays it. This is one of the biggest benefits of using in-network providers!'},
+  {q:'What makes up the patient\'s total responsibility of $200.40?',
+   options:['The billed amount minus the allowed amount','Only the deductible','Only coinsurance','Deductible ($100) + Coinsurance ($70.40) + Copay ($30)'],correct:3,
+   rationale:'Patient responsibility = Deductible + Coinsurance + Copay = $100 + $70.40 + $30 = $200.40. The contractual adjustment is NOT part of what the patient pays.'},
+];
+const EOB_QUIZ = EOB_QUIZ_RAW.map(q=>shuffleOptions(q));
+
+function initEOBQuiz(){
+  const area=document.getElementById('eobQuizArea');
+  STATE.scores.sec5=0;
+  EOB_QUIZ.forEach((q,qi)=>{
+    const div=document.createElement('div');div.className='card';div.id='eobQ_'+qi;
+    const optHTML=q.options.map((o,oi)=>`<button class="option-btn" onclick="answerQuiz(5,${qi},${oi})"><span class="marker">${String.fromCharCode(65+oi)}</span><span>${o}</span></button>`).join('');
+    div.innerHTML=`<p style="font-weight:600;margin-bottom:1rem;font-size:.95rem">${qi+1}. ${q.q}</p>${optHTML}<div class="rationale" id="ratE_${qi}"></div>`;
+    area.appendChild(div);
+  });
+}
+
+// ========== SEC 6: SCENARIOS (RANDOMIZED) ==========
+const SCENARIO_Q_RAW=[
+  {q:'A patient says: "I already pay for insurance every month — why do I have to pay $30 right now?"',
+   options:['Tell them to call their insurance company','Say you don\'t know and let billing handle it','Explain that the $30 is their copay — a fixed per-visit fee separate from their monthly premium','Tell them insurance should cover everything'],correct:2,
+   rationale:'The patient is confusing premium with visit costs. The monthly premium keeps coverage active, while the copay is a separate per-visit charge required by their plan.'},
+  {q:'A patient is upset because the billed amount was $500 but insurance only "allowed" $320. They think they owe the $180 difference.',
+   options:['Tell them they owe $180','Suggest they switch insurance plans','Tell them the insurance made an error','Explain that the $180 difference is a contractual adjustment the provider writes off — they do NOT owe it'],correct:3,
+   rationale:'The billed vs. allowed difference is the contractual adjustment. In-network providers agree to write this off. The patient only owes deductible, coinsurance, and copay — NOT the adjustment.'},
+  {q:'A parent brings in their 22-year-old son for a visit. The insurance card has the parent\'s name. What do you need to verify?',
+   options:['That the son is listed as a dependent on the policy and coverage is active','The parent must be present for the visit','The son needs his own insurance','The card is invalid because it has someone else\'s name'],correct:0,
+   rationale:'Children can be covered as dependents up to age 26. Verify the son is listed as a dependent and coverage is active. The parent doesn\'t need to be present.'},
+  {q:'A patient asks: "What does it mean that my deductible has been met?"',
+   options:['It means they no longer have insurance','It means their premium will increase','It means all future visits are free','It means they\'ve paid enough out-of-pocket that insurance will now start sharing costs through coinsurance'],correct:3,
+   rationale:'When the deductible is met, insurance begins paying its share. The patient still pays coinsurance and copays, but the big up-front threshold is done for the year.'},
+];
+const SCENARIO_Q = SCENARIO_Q_RAW.map(q=>shuffleOptions(q));
+
+function initScenarios(){
+  const area=document.getElementById('scenarioArea');STATE.scores.sec6=0;
+  const scenColors=['var(--coral)','var(--sky)','var(--violet)','var(--pink)'];
+  SCENARIO_Q.forEach((q,qi)=>{
+    const div=document.createElement('div');div.className='card';div.id='scen_'+qi;
+    div.style.borderLeft=`4px solid ${scenColors[qi]}`;
+    const optHTML=q.options.map((o,oi)=>`<button class="option-btn" onclick="answerQuiz(6,${qi},${oi})"><span class="marker">${String.fromCharCode(65+oi)}</span><span>${o}</span></button>`).join('');
+    div.innerHTML=`<p style="font-weight:600;margin-bottom:1rem;font-size:.95rem">Scenario ${qi+1}: ${q.q}</p>${optHTML}<div class="rationale" id="ratS_${qi}"></div>`;
+    area.appendChild(div);
+  });
+}
+
+// ========== SEC 7: REPORT ==========
+function generateReport(){
+  const mg=document.getElementById('masteryGrid');mg.innerHTML='';
+  const sections=[
+    {name:'Core Concepts',score:STATE.conceptsFlipped.size,total:CONCEPTS.length},
+    {name:'Concept Checks',score:STATE.scores.sec3,total:QUIZ_Q.length},
+    {name:'Matching & Sorting',score:STATE.scores.sec4Match+STATE.scores.sec4Sort,total:MATCH_PAIRS.length+SORT_ITEMS.length},
+    {name:'EOB Explored',score:STATE.scores.sec5Explore,total:10},
+    {name:'EOB Interpretation',score:STATE.scores.sec5||0,total:EOB_QUIZ.length},
+    {name:'Workplace Scenarios',score:STATE.scores.sec6,total:SCENARIO_Q.length},
+  ];
+  sections.forEach(s=>{
+    const pct=s.total?Math.round(s.score/s.total*100):0;
+    const level=pct>=80?'strong':pct>=60?'developing':'review';
+    const d=document.createElement('div');d.className='mastery-item';
+    d.innerHTML=`<span>${s.name}</span><span class="score-pill ${level}">${s.score}/${s.total}</span>`;
+    mg.appendChild(d);
+  });
+
+  const br=document.getElementById('badgeRow');br.innerHTML='';
+  const badgeGrads=['var(--coral-g)','var(--sky-g)','var(--violet-g)','var(--amber-g)','var(--pink-g)'];
+  const badges=[
+    {icon:'📚',label:'Explorer',earned:STATE.conceptsFlipped.size>=CONCEPTS.length},
+    {icon:'✅',label:'Quiz Pro',earned:STATE.scores.sec3>=QUIZ_Q.length-1},
+    {icon:'🔗',label:'Matcher',earned:matchedCount>=MATCH_PAIRS.length},
+    {icon:'🔍',label:'EOB Detective',earned:STATE.scores.sec5Explore>=8},
+    {icon:'💼',label:'Work Ready',earned:STATE.scores.sec6>=SCENARIO_Q.length-1},
+  ];
+  badges.forEach((b,i)=>{
+    const d=document.createElement('div');
+    d.className='badge-item '+(b.earned?'earned':'locked');
+    if(b.earned)d.style.background=badgeGrads[i];
+    d.innerHTML=`<span>${b.icon}</span><span class="badge-label">${b.label}</span>`;
+    d.title=b.label+(b.earned?' — Earned!':' — Not yet');
+    br.appendChild(d);
+  });
+
+  let summary='INSURANCE BASICS — Performance Summary\n';
+  summary+='========================================\n\n';
+  sections.forEach(s=>{
+    const pct=s.total?Math.round(s.score/s.total*100):0;
+    const lvl=pct>=80?'Strong':pct>=60?'Developing':'Review Needed';
+    summary+=`${s.name}: ${s.score}/${s.total} (${pct}%) — ${lvl}\n`;
+  });
+  summary+='\n--- Personalized Feedback ---\n';
+  if(STATE.scores.sec3>=QUIZ_Q.length-1)summary+='You showed strong understanding of core insurance terms.\n';
+  else if(STATE.scores.sec3>=QUIZ_Q.length/2)summary+='You have a developing grasp of core terms. Review premium vs. copay vs. coinsurance distinctions.\n';
+  else summary+='Core concepts need more review. Focus on premium, deductible, copay, and coinsurance differences.\n';
+  if(STATE.scores.sec5Explore>=8)summary+='Excellent EOB exploration — you inspected most components.\n';
+  else summary+='Try going back to explore more EOB fields to build confidence.\n';
+  if((STATE.scores.sec5||0)>=EOB_QUIZ.length-1)summary+='Strong EOB interpretation — you can read and explain an EOB.\n';
+  else summary+='Review allowed amount vs. billed amount and how patient responsibility is calculated.\n';
+  if(STATE.scores.sec6>=SCENARIO_Q.length-1)summary+='Your workplace scenarios were excellent — you\'re ready for patient questions.\n';
+  else summary+='Practice explaining insurance concepts to patients in simple terms.\n';
+  summary+='\nBadges Earned: '+badges.filter(b=>b.earned).map(b=>b.label).join(', ')+'\n';
+  document.getElementById('perfSummary').textContent=summary;
+
+  const ca=document.getElementById('confidenceArea');ca.innerHTML='';
+  ['Premium','Deductible','Copay','Coinsurance','EOB','Allowed vs Billed','Patient Responsibility','Adjudication','Dependent vs Subscriber'].forEach(t=>{
+    const d=document.createElement('div');d.style.marginBottom='.75rem';
+    d.innerHTML=`<div style="font-weight:600;font-size:.88rem;margin-bottom:.4rem">${t}</div><div class="confidence-bar">${['I understand this well','I need more practice','I still confuse this'].map((l,i)=>`<button class="conf-btn" onclick="setConfidence('${t.replace(/'/g,"\\'")}',${i},this)">${l}</button>`).join('')}</div>`;
+    ca.appendChild(d);
+  });
+  updateFullOutput(summary);
+}
+function setConfidence(term,level,btn){
+  STATE.confidenceRatings[term]=level;
+  btn.parentElement.querySelectorAll('.conf-btn').forEach(b=>b.classList.remove('selected','c-strong','c-developing','c-review'));
+  btn.classList.add('selected',level===0?'c-strong':level===1?'c-developing':'c-review');
+  playSound('click');updateFullOutput();
+}
+function generateReflection(){
+  const text=document.getElementById('reflectionText').value;
+  if(!text.trim()){alert('Please write something in the reflection box first.');return;}
+  const out=document.getElementById('reflectionOutput');out.style.display='block';
+  out.textContent='STUDENT REFLECTION\n==================\n'+text;
+  document.getElementById('copyReflBtn').style.display='inline-flex';
+  updateFullOutput();
+}
+function updateFullOutput(summary){
+  summary=summary||document.getElementById('perfSummary').textContent;
+  let full=summary;
+  const refl=document.getElementById('reflectionOutput');
+  if(refl&&refl.style.display!=='none'&&refl.textContent)full+='\n\n'+refl.textContent;
+  const ck=Object.keys(STATE.confidenceRatings);
+  if(ck.length){full+='\n\nCONFIDENCE SELF-ASSESSMENT\n=========================\n';ck.forEach(k=>{const l=STATE.confidenceRatings[k];full+=`${k}: ${l===0?'I understand this well':l===1?'I need more practice':'I still confuse this'}\n`;});}
+  document.getElementById('fullOutput').textContent=full;
+}
+
+// ========== COPY ==========
+function copyText(id){
+  const text=document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(()=>showToast()).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();showToast();
+  });
+}
+function showToast(){
+  const t=document.createElement('div');t.className='copy-toast';t.textContent='✓ Copied to clipboard!';
+  document.body.appendChild(t);setTimeout(()=>t.remove(),2200);playSound('correct');
+}
+
+// ========== AUDIO ==========
+let mediaRecorder,audioChunks=[];
+async function startRecording(){
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    mediaRecorder=new MediaRecorder(stream);audioChunks=[];
+    mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
+    mediaRecorder.onstop=()=>{const blob=new Blob(audioChunks,{type:'audio/webm'});const url=URL.createObjectURL(blob);const p=document.getElementById('recPlayback');p.src=url;p.style.display='block';document.getElementById('recActions').style.display='block';stream.getTracks().forEach(t=>t.stop());};
+    mediaRecorder.start();
+    document.getElementById('recStartBtn').style.display='none';
+    document.getElementById('recStopBtn').style.display='flex';
+    document.getElementById('recStopBtn').classList.add('recording');
+    document.getElementById('recStatus').textContent='Recording... click stop when done';
+    document.getElementById('recStatus').style.color='var(--coral)';
+  }catch(e){
+    document.getElementById('recStatus').textContent='Microphone access denied. Use the text reflection box above instead.';
+    document.getElementById('recStatus').style.color='var(--rose)';
+  }
+}
+function stopRecording(){
+  if(mediaRecorder&&mediaRecorder.state!=='inactive')mediaRecorder.stop();
+  document.getElementById('recStopBtn').style.display='none';
+  document.getElementById('recStopBtn').classList.remove('recording');
+  document.getElementById('recStartBtn').style.display='flex';
+  document.getElementById('recStatus').textContent='Recording saved! Play it back below.';
+  document.getElementById('recStatus').style.color='var(--emerald)';
+}
+function clearRecording(){
+  document.getElementById('recPlayback').style.display='none';document.getElementById('recPlayback').src='';
+  document.getElementById('recActions').style.display='none';
+  document.getElementById('recStatus').textContent='Click to record';
+  document.getElementById('recStatus').style.color='var(--text3)';
+  audioChunks=[];
+}
+
+// ========== CELEBRATION ==========
+function celebrate(){
+  STATE.sectionsCompleted.add(7);updateProgress();playSound('celebrate');
+  const layer=document.getElementById('celebrationLayer');
+  const colors=['#ff6b6b','#38bdf8','#a78bfa','#34d399','#fbbf24','#f472b6','#fb923c','#22d3ee','#818cf8','#a3e635'];
+  for(let i=0;i<80;i++){
+    const c=document.createElement('div');c.className='confetti';
+    const size=6+Math.random()*10;
+    c.style.cssText=`left:${Math.random()*100}%;top:-15px;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};--dur:${1.5+Math.random()*2}s;--rot:${360+Math.random()*720}deg;animation-delay:${Math.random()*1.5}s;border-radius:${Math.random()>.5?'50%':'2px'}`;
+    layer.appendChild(c);
+  }
+  setTimeout(()=>layer.innerHTML='',4500);
+}
+
+// ========== SAVE / LOAD ==========
+function saveState(){try{localStorage.setItem('insuranceBasicsV2',JSON.stringify({currentSection:STATE.currentSection,sectionsCompleted:[...STATE.sectionsCompleted],scores:STATE.scores,conceptsFlipped:[...STATE.conceptsFlipped],priorTerms:[...STATE.priorTerms],confidenceRatings:STATE.confidenceRatings}));}catch(e){}}
+function loadState(){try{const d=JSON.parse(localStorage.getItem('insuranceBasicsV2'));if(d){STATE.currentSection=d.currentSection||1;STATE.sectionsCompleted=new Set(d.sectionsCompleted||[]);Object.assign(STATE.scores,d.scores||{});STATE.conceptsFlipped=new Set(d.conceptsFlipped||[]);STATE.priorTerms=new Set(d.priorTerms||[]);STATE.confidenceRatings=d.confidenceRatings||{};}}catch(e){}}
+function resetProgress(){if(!confirm('Reset all progress? This cannot be undone.'))return;localStorage.removeItem('insuranceBasicsV2');location.reload();}
+
+// ========== INIT ==========
+function init(){
+  loadState();initPriorKnowledge();initConcepts();initQuiz();initMatch();initSort();initEOB();initEOBQuiz();initScenarios();
+  if(STATE.conceptsFlipped.size){const cards=document.querySelectorAll('.concept-card');STATE.conceptsFlipped.forEach(i=>{if(cards[i])cards[i].classList.add('flipped');});updateConceptProgress();}
+  updateProgress();
+  if(STATE.currentSection>1){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('sec'+STATE.currentSection).classList.add('active');}
+}
+init();
+</script>
+</body>
+</html>
